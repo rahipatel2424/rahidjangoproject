@@ -1,0 +1,97 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+   <head>
+   </head>
+   <body class="sub_page">
+      <div class="hero_area">
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Grid</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container" style="margin-top: -70px;">
+            <div class="heading_container heading_center">
+               <h2>
+                  <span>Product Detail</span>
+               </h2>
+            </div>
+            <div class="row">
+               
+               <div class="col-sm-6 col-md-4 col-lg-5" style="margin-top: -70px;">
+                  <div class="box">
+                     
+                     <div class="img-box">
+                        <img src="{{product.product_image.url}}" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Category : {{product.product_category}}
+                        </h5>
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Description : {{product.product_desc}}
+                        </h5>   
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Size : {{product.product_size}}
+                        </h5>   
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Price : {{product.product_price}}
+                        </h5>   
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Type : {{product.product_type}}
+                        </h5>   
+                     </div>
+                  </div>
+               </div>
+
+               <div class="col-sm-6 col-md-4 col-lg-5" style="margin-top: 100px;">   
+                  <div class="options">
+                     {% if wishlist_flag == True %}
+                        <a href="{% url 'remove_from_wishlist' pk=product.pk %}" class="option2">
+                           Remove From Wishlist
+                        </a>
+                     {% else %}
+                        <a href="{% url 'add_to_wishlist' pk=product.pk %}" class="option2">
+                           Add To Wishlist
+                        </a>
+                     {% endif %}
+                     {% if cart_flag == True %}
+                        <a href="{% url 'remove_from_cart' pk=product.pk %}" class="option2">
+                           Remove From Cart
+                        </a>
+                     {% else %}
+                        <a href="{% url 'add_to_cart' pk=product.pk %}" class="option2">
+                           Add To Cart
+                        </a>
+                     {% endif %}
+                                               
+                  </div>                  
+               </div>
+            </div>   
+         </div>
+      </section>
+      <!-- end product section -->
+   </body>
+</html>
+{% endblock %}

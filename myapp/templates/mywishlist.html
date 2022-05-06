@@ -1,0 +1,73 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+   <head>
+   </head>
+   <body class="sub_page">
+      <div class="hero_area">
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Grid</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container">
+            <div class="heading_container heading_center">
+               {% if wishlists%}
+               <h2>
+                  Your <span>Wishlist Products</span>
+               </h2>
+               {% else %}
+               <h2>
+                  No <span>Products In Wishlist</span>
+               </h2>
+               {% endif %}
+            </div>
+            {% if msg %}
+               <b style="color:red;">{{msg}}</b>
+            {% endif %}
+            <div class="row">
+               {% for i in wishlists %}
+               <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           
+                           <a href="{% url 'user_product_detail' pk=i.product.pk %}" class="option2">
+                           Details
+                           </a>
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img src="{{i.product.product_image.url}}" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           {{i.product.product_category}}
+                        </h5>
+                        <h6>
+                           {{i.product.product_price}}
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+      </section>
+      <!-- end product section -->
+   </body>
+</html>
+{% endblock %}

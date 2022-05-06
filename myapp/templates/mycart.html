@@ -1,0 +1,90 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+   <head>
+   </head>
+   <body class="sub_page">
+      <div class="hero_area">
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Grid</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container">
+            <div class="heading_container heading_center">
+               {% if carts %}
+               <h2>
+                  Your <span>Cart Products</span>
+               </h2>
+               {% else %}
+               <h2>
+                  No <span>Products In Cart</span>
+               </h2>
+               {% endif %}
+            </div>
+            {% if msg %}
+               <b style="color:red;">{{msg}}</b>
+            {% endif %}
+            <div class="row">
+               {% for i in carts %}
+               <div class="col-sm-6 col-md-4 col-lg-4">
+                  <div class="box">
+                     <div class="img-box">
+                        <img src="{{i.product.product_image.url}}" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           {{i.product.product_category}}
+                        </h5>
+                        <h6>
+                           {{i.product.product_price}}
+                        </h6>                  
+                     </div>
+                     <div class="detail-box">
+                        <form name="cart" method="post" action="{% url 'change_qty' pk=i.pk %}">
+                           {% csrf_token %}
+                           
+                           <label>Product Quantity:</label>
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           <input type="number" name="product_qty" value="{{i.product_qty}}" min="1" max="10" style="padding:1px 1px 1px 1px;width: 20%;" onchange="this.form.submit();">   
+                           
+                        </form>   
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Total Price :
+                        </h5>
+                        <h6>
+                           {{i.total_price}}
+                        </h6>                  
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+            
+            <form method="post" action="{% url 'pay' %}">
+               {% csrf_token %}
+               <h3>Net Price To Pay : {{net_price}}</h3>
+               <input type="hidden" name="amount" value="{{net_price}}">
+               <input type="submit" name="action" value="Buy Now" class="btn btn-primary">
+            </form>
+         </div>
+      </section>
+      <!-- end product section -->
+   </body>
+</html>
+{% endblock %}
